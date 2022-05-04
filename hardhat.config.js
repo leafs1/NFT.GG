@@ -1,21 +1,24 @@
 require("@nomiclabs/hardhat-waffle");
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
 
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
 module.exports = {
+  // Set RPC nodes to what we are going to connect to 
+  networks: {
+    // Dont need to define an account cause hardhat test env automatically does it for us.
+    hardhat: {
+      chainId: 1337 // Hardhat config thing
+    },
+    mumbai: {
+      url: "https://rpc-mumbai.matic.today",
+      //Accounts from which we are deploying our contracts
+      accounts: []
+    },
+    mainnet: {
+      url: "https://polygon-rpc.com/",
+      accounts: []
+    }
+  },
+
   solidity: "0.8.4",
 };
