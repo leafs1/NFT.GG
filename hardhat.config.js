@@ -1,6 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
 
+require('dotenv').config(); // dotenv package loads vars in .env during runtime
 
+const privateKey = process.env.PRIVATE_KEY; // Private key for acc stored in .env
 
 module.exports = {
   // Set RPC nodes to what we are going to connect to 
@@ -12,11 +14,12 @@ module.exports = {
     mumbai: {
       url: "https://rpc-mumbai.matic.today",
       //Accounts from which we are deploying our contracts
-      accounts: []
+      accounts: [privateKey]
+      
     },
     mainnet: {
       url: "https://polygon-rpc.com/",
-      accounts: []
+      accounts: [privateKey]
     }
   },
 
