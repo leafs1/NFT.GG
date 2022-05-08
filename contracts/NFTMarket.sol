@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "../node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract NFTMarket is ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -28,7 +28,7 @@ contract NFTMarket is ReentrancyGuard {
         bool sold;
     }
 
-    mapping(uint256 => MarketItem) private idToMarketItem; // Dict with all market items (uint256 is the itemId)
+    mapping(uint256 => MarketItem) private idToMarketItem; // Dict with all market items (uint256 is the itemId and its the local itemId that we store not tokenId)
 
     event MarketItemCreated ( 
         uint indexed itemId,
@@ -87,8 +87,86 @@ contract NFTMarket is ReentrancyGuard {
 
     }
 
+    // Returns array of unsold items on the marketplace
     function fetchMarketItems() public view returns(MarketItem[] memory) {
-        
+        uint itemCount = _itemIds.current();
+        uint unsoldItemCount = _itemIds.current() - _itemsSold.current();
+
+
+        uint currentIndex = 0; // Store current index of the items array 
+        MarketItem[] memory items = new MarketItem[](unsoldItemCount); // Make an array the size of the number of items in the market and store in memory
+        for (uint i = 0; i < itemCount; i++) { // Loop over total number of items that have been created
+            if (idToMarketItem[i+1].owner == address(0)) { // If the market item has no owner that means it is on the marketplace and unsold
+                uint currentId = idToMarketItem[i+1].itemId; // local ID of the unsold item
+                MarketItem storage currentItem = idToMarketItem[currentId]; // MarketItem object of the item
+                items[currentIndex] = currentItem; // Insert unsold item into array
+                currentIndex ++;
+            }
+        }
+
+        return items;
     }
+
+    // Returns array of NFTs that the user has purchased
+    function fetchMyNFTs() public view returns (MarketItem[] memory) {
+        uint totalItemCount = _itemIds.current();
+        
+        uint itemCount = 0; // Number of nfts that the user calling the function owns
+        uint currentIndex = 0; // store current index of the items array which stores a list of our nfts
+
+        // Loop through all market items and find the number of nfts the user owns
+        for (uint i=0; i<totalItemCount; i++) { 
+            if (idToMarketItem[i+1].owner == msg.sender) {
+                itemCount ++;
+            }
+        }
+
+        MarketItem[] memory items = new MarketItem[](itemCount); // Array storing a list of our nfts
+
+        // Loop through all market items and add out nfts to the list, 'items'
+        for (uint i=0; i < totalItemCount; i++) {
+            if (idToMarketItem[i+1].owner == msg.sender) {
+                uint currentId = idToMarketItem[i+1].itemId; // I'm pretty sure this line is useless, not exactly sure though
+                MarketItem storage currentItem = idToMarketItem[currentId];
+                items[currentIndex] = currentItem; // Add our nft to the list
+                currentIndex ++;
+            }
+        }
+
+        return items;
+    }
+
+    // returns array of nfts that user added to the marketplace (could also be list of nfts that the current user is selling)
+    function fetchItemsCreated() public view returns (MarketItem[] memory) {
+        uint totalItemCount = _itemIds.current();
+        
+        uint itemCount = 0; //
+        uint currentIndex = 0; // 
+
+        // Loop through all market items and find the number of nfts that the user created.
+        for (uint i=0; i<totalItemCount; i++) { 
+            if (idToMarketItem[i+1].seller == msg.sender) {
+                itemCount ++;
+            }
+        }
+
+        MarketItem[] memory items = new MarketItem[](itemCount); // Array storing a list of our created nfts
+
+        // Loop through all market items and add our created nfts to the list, 'items'
+        for (uint i=0; i < totalItemCount; i++) {
+            if (idToMarketItem[i+1].seller == msg.sender) {
+                uint currentId = idToMarketItem[i+1].itemId; // I'm pretty sure this line is useless, not exactly sure though
+                MarketItem storage currentItem = idToMarketItem[currentId];
+                items[currentIndex] = currentItem; // Add our nft to the list
+                currentIndex ++;
+            }
+        }
+
+        return items;
+
+
+    }
+
+
 
 }
