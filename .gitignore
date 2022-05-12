@@ -16,6 +16,8 @@
 /build
 
 .env
+config.js
+hardhat.config.js
 
 # misc
 .DS_Store
