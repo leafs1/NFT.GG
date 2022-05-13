@@ -17,8 +17,11 @@ export default function Home() {
     loadNFTs();
   }, [])
 
+  const projectId = process.env.PROJECT_ID
+
   async function loadNFTs() {
-    const provider = new ethers.providers.JsonRpcProvider(); 
+    //const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mainnet.infura.io/v3/d8864f3ade1d418dac2d3cac718a25b0`); 
+    const provider = new ethers.providers.JsonRpcProvider();
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
     const marketContract = new ethers.Contract(nftmarketaddress, NFTMarket.abi, provider);
     const data = await marketContract.fetchMarketItems();

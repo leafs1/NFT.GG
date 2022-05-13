@@ -11,7 +11,7 @@ contract NFTMarket is ReentrancyGuard {
     Counters.Counter private _itemsSold; // Counter for number of items sold cause we cant have dynamic linked arrays in solidity
 
     address payable owner; // owner of the contract
-    uint256 listingPrice = 0.025 ether; // the ether keyword adds 18 decmial points. This is equivalent to matic
+    uint256 listingPrice = 0.00000025 ether; // the ether keyword adds 18 decmial points. This is equivalent to matic
 
 
     constructor() {

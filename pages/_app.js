@@ -1,5 +1,7 @@
 import '../styles/globals.css'
 import Link from 'next/link'
+import { Navbar } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 function MyApp({ Component, pageProps }) {

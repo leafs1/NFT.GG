@@ -2,7 +2,9 @@ require("@nomiclabs/hardhat-waffle");
 
 require('dotenv').config(); // dotenv package loads vars in .env during runtime
 
-const privateKey = process.env.PRIVATE_KEY; // Private key for acc stored in .env
+const privateKey = process.env.PRIVATE_KEY; // Private key for metamask acc stored in .env
+//const projectId = process.env.PROJECT_ID
+
 
 module.exports = {
   // Set RPC nodes to what we are going to connect to 
@@ -12,13 +14,13 @@ module.exports = {
       chainId: 1337 // Hardhat config thing
     },
     mumbai: {
-      url: "https://rpc-mumbai.matic.today",
+      url: `https://polygon-mumbai.infura.io/v3/{put project id here}`,
       //Accounts from which we are deploying our contracts
       accounts: [privateKey]
       
     },
     mainnet: {
-      url: "https://polygon-rpc.com/",
+      url: `https://polygon-mainnet.infura.io/v3/{put project id here}`,
       accounts: [privateKey]
     }
   },
