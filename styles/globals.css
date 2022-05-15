@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navbar-brand {
+    color: white !important;
+    font-size: 3rem !important;
+    padding-right: 5rem;
+}
+
+.nav-link {
+    color: white !important;
+    font-size: 1.3rem !important;
+
+}
+.nav-link.active {
+    background-color: purple !important;
+  }
+
+.navButton {
+    font-size: 1.3rem !important;
+    font-weight: bold !important;
+    color: white !important;
+    padding-left: 2rem !important;
+}
+.navButton.active {
+    background-color: #212529 !important;
+}
+
+.packsTitle {
+    color: purple;
+    font-size: 400%;
+    padding-top: 1rem;
+}
+
+.packsTab {
+    padding-top: 2rem;
+}
+
+
+

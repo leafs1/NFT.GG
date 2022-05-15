@@ -1,37 +1,38 @@
 import '../styles/globals.css'
 import Link from 'next/link'
-import { Navbar } from 'react-bootstrap'
+import { Navbar, Container, Nav } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css';
 
 
 function MyApp({ Component, pageProps }) {
   return (
     <div>
-      <nav className='border-b p-6'>
-        <p className='text-4xl font-bold'>NFT.GG</p>
-        <div className='flex mt-4'>
-          <Link href="/">
-            <a className='mr-6 text-pink-500'>
-              Home
-            </a>
-          </Link>
-          <Link href="/create-item">
-            <a className='mr-6 text-pink-500'>
-              Sell Digital Asset
-            </a>
-          </Link>
-          <Link href="/my-assets">
-            <a className='mr-6 text-pink-500'>
-              My Digital Assets
-            </a>
-          </Link>
-          <Link href="/creator-dashboard">
-            <a className='mr-6 text-pink-500'>
-              Creator Dashboard
-            </a>
-          </Link>
-        </div>
-      </nav>
+      <Navbar className='bg-dark' expand="lg" >
+        <Container >
+          <Navbar.Brand href="/" >NFT.gg</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto" >
+              <Link className='navLink' href="/" passHref>
+                <Nav.Link className='navButton'>Packs</Nav.Link>
+              </Link>
+              <Link href="/marketplace" passHref>
+                <Nav.Link className='navButton'>Marketplace</Nav.Link>
+              </Link>
+              <Link href="/create-item" passHref>
+                <Nav.Link className='navButton'>Sell Digital Asset</Nav.Link>
+              </Link>
+              <Link href="/my-assets" passHref>
+              <Nav.Link className='navButton'>My Digital Assets</Nav.Link>
+              </Link>
+              <Link href="/creator-dashboard" passHref>
+
+                <Nav.Link className='navButton'>Creator Dashboard</Nav.Link>
+              </Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
       <Component {...pageProps} />
 
