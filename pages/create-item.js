@@ -4,6 +4,7 @@ import { create as ipfsHttpClient } from 'ipfs-http-client';
 import { useRouter } from "next/router";
 import Web3Modal from 'web3modal';
 
+
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 import {
@@ -12,6 +13,8 @@ import {
 
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import NFTMarket from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json'
+
+import axios from "axios";
 
 export default function CreateItem() {
     const [fileUrl, setFileUrl] = useState(null)
@@ -44,13 +47,13 @@ export default function CreateItem() {
         const added = await client.add(data)
         const url = `https://ipfs.infura.io/ipfs/${added.path}`
         /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
-        createSale(url)
+        createSale(url, name, description, fileUrl)
       } catch (error) {
         console.log('Error uploading file: ', error)
       }  
     }
   
-    async function createSale(url) {
+    async function createSale(url, name, description, image) {
       const web3Modal = new Web3Modal()
       const connection = await web3Modal.connect()
       const provider = new ethers.providers.Web3Provider(connection)    
@@ -72,6 +75,17 @@ export default function CreateItem() {
   
       transaction = await contract.createMarketItem(nftaddress, tokenId, price, { value: listingPrice })
       await transaction.wait()
+
+      let data = {name, description, image, nftaddress, tokenId, price, value: listingPrice }
+      axios.post('/api/addNFT', data).then((response) => {
+        console.log(response)
+      })
+/*
+      // Add new nft to mongodb
+      const client = new MongoClient(process.env.MONGO_URI);
+      addNFT(client, {nftaddress, tokenId, price, value: listingPrice})
+      client.close()
+*/
       router.push('/')
     }
   
