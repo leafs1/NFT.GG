@@ -6,18 +6,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { nftaddress, nftmarketaddress } from '../config';
 
-//import { Tabs, Tab, Container, Row } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 import PacksTabs from './components/PacksTabs'
+import PacksCard from './components/PacksCard';
 
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json"
 import NFTMarket from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json"
+
 
 export default function Home() {
   
 
   return (
-    <PacksTabs headings={["OVERVIEW", "IN STOCK", "SOLD OUT"]}></PacksTabs>
+    <div className='bg-black'>
+
+      <PacksTabs headings={["OVERVIEW", "IN STOCK", "SOLD OUT"]}></PacksTabs>
+
+      <Row xs={1} md={2} className="g-4 p-60 pt-28" >
+        {Array.from({ length: 4 }).map((_, idx) => (
+          <Col>
+            <PacksCard img="/metamask.jpg" title="test" text="some text" ></PacksCard>
+
+          </Col>
+        ))}
+      </Row>
+    </div>
     
     
   )

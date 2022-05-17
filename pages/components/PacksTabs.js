@@ -16,17 +16,16 @@ export default function PacksTabs(props) {
     return (
         <div className='bg-black' >
           <Container >
-            <h1 className='packsTitle'>PACKS</h1>
+            <h1 className='packsTitle '>PACKS</h1>
     
-            <Tabs defaultActiveKey="home" variant="pills" className='packsTab'>
+
+
+            <Tabs defaultActiveKey="OVERVIEW" variant="pills" className='packsTab'>
               {
                 props.headings.map((tab) => {
-                  return <Tab eventKey={tab} title={tab} >1</Tab>
-                  
+                  return <Tab eventKey={tab} title={tab} ></Tab>
                 })
-
               }
-              
             </Tabs>
           </Container>
           
