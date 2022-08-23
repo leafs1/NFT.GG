@@ -1,8 +1,7 @@
-import '../styles/globals.css'
-import Link from 'next/link'
-import { Navbar, Container, Nav } from 'react-bootstrap'
+import '../styles/globals.css';
+import Link from 'next/link';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -23,7 +22,7 @@ function MyApp({ Component, pageProps }) {
                 <Nav.Link className='navButton'>Sell Digital Asset</Nav.Link>
               </Link>
               <Link href="/my-assets" passHref>
-              <Nav.Link className='navButton'>My Digital Assets</Nav.Link>
+                <Nav.Link className='navButton'>My Digital Assets</Nav.Link>
               </Link>
               <Link href="/creator-dashboard" passHref>
 
@@ -36,9 +35,8 @@ function MyApp({ Component, pageProps }) {
 
       <Component {...pageProps} />
 
-
     </div>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;
