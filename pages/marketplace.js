@@ -20,18 +20,18 @@ export default function Home() {
   const projectId = process.env.PROJECT_ID
 
   async function loadNFTs() {
-    //const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mainnet.infura.io/v3/d8864f3ade1d418dac2d3cac718a25b0`); 
+    //const provider = new ethers.providers.JsonRpcProvider(`https://polygon-mainnet.infura.io/v3/d8864f3ade1d418dac2d3cac718a25b0`);
     const provider = new ethers.providers.JsonRpcProvider();
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
     const marketContract = new ethers.Contract(nftmarketaddress, NFTMarket.abi, provider);
     const data = await marketContract.fetchMarketItems();
-    
+
     const items = await Promise.all(data.map(async i => {
       const tokenUri = await tokenContract.tokenURI(i.tokenId); // Token URI (just a string) is on the blockchain. It points to a location on internet (ifps) where JSON metadata can be found
       const meta = await axios.get(tokenUri);
       let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
       let item = {
-        price, 
+        price,
         tokenId: i.tokenId.toNumber(),
         seller: i.seller,
         owner: i.owner,
@@ -69,15 +69,15 @@ export default function Home() {
   )
 
   return (
-    
+
 
       <div className='flex justify-center'>
         <div className='px-4' style={{maxWidth: '1600px'}}>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
             {
               nfts.map((nft, i) => (
-                <div key={i} className="border shadow rounded-xl overflow-hidden"> 
-                  <img src={nft.image}/>
+                <div key={i} className="border shadow rounded-xl overflow-hidden">
+                  <img src={"https://nftgg.infura-ipfs.io/ipfs/" + nft.image.path}/>
                   <div className='p-4'>
                     <p style={{height: '64px'}} className='text-2xl font-semibold'>{nft.name}</p>
                     <div style={{height: '70px', overflow: 'hidden'}}>
@@ -94,6 +94,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-  
+
   )
 }

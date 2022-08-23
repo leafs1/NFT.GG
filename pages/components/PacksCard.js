@@ -10,14 +10,14 @@ export default function PacksCard(props) {
 
     return (
         <div>
-            
-        
 
-        
+
+
+
         <Card className='card'>
             <Card.Img variant="top" src={props.img} />
-                
-            
+
+
             <Card.Body>
             <Card.Title>{props.title}</Card.Title>
             <Card.Text>
@@ -26,8 +26,8 @@ export default function PacksCard(props) {
             </Card.Body>
         </Card>
       </div>
-        
-                    
-        
+
+
+
     )
 }
